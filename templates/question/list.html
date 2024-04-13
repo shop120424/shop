@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "questions" %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block content %}
+<h2>{% trans "questions" %}</h2>
+{% if question.count > 0 %}
+<div class="row">
+	<table id="myTable" class="table-manager" style="width:100%">
+		<thead>
+			<tr>
+				<th><p>{% trans "date_question" %}</p></th>
+				<th><p>{% trans "catalog" %}</p></th>
+				<th><p>{% trans "question" %}</p></th>
+				<th><p>{% trans "answer" %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for r in question %}
+			<tr>
+				<td><p>{{ r.date_question | date:"d.m.Y H:i"}}<br>{{ r.user.first_name }}</p></td>
+				<td><p>{{ r.catalog }}</p></td>
+				<td><p>{{ r.question | linebreaks }}</p></td>
+				<td>
+					<p>
+					{% if r.answer != None %}
+						{{ r.answer | linebreaks }}
+					{% endif %}	
+					</p>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endif %}
+{% endblock content %}

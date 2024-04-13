@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% endblock title %}
+{% block header %}{% endblock header %} 
+{% block content %}
+<div class="div-width-100-text-center">
+	<h3>{% trans "Contacts" %}</h3>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<br>
+		<h2 align="center">Магазин-салон «OLIVER»</h2>
+		<p align="center">Одежда для дома и отдыха, обувь, постельные принадлежности!</p>
+		<address>
+			<p>🏙️Усть-Каменогорск<br>
+			🏫Ауэзова 4: <a href="tel:87056677575">87056677575</a><br>
+			🏫Виноградова 17: <a href="tel:87772457221">87772457221</a></p>			
+		</address>				
+	</div>
+	<div class="col-md-9" style="position:relative;overflow:hidden;">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2566.488723422077!2d82.5827680123674!3d49.96469267138464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42eb4598e4bd69f9%3A0xebe18eed5809d28f!2z0YPQuy4g0JLQuNC90L7Qs9GA0LDQtNC-0LLQsCAxNywg0KPRgdGC0Ywt0JrQsNC80LXQvdC-0LPQvtGA0YHQuiAwNzAwMDA!5e0!3m2!1sru!2skz!4v1712834383162!5m2!1sru!2skz" width="100%" height="500px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+	</div>
+</div>
+{% endblock content %}

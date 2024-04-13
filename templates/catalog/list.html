@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "Catalog list" %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block content %}
+<h2>{% trans "Catalog list" %}</h2>
+
+<div class="row" style="margin: 10px">
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-6">
+				<h3 align="center">{% trans "Search" %}</h3>
+				<hr>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<p>{% trans "category" %}</p>
+							</td>
+							<td>
+								<select name="item_category" class="chosen" style="margin:5px">
+									<option value="-----">-----</option>
+									{% for entry in category %}
+										{% if entry.category_title == selected_item_category %}
+											<option value="{{ entry.category_title }}" selected="selected">{{ entry.category_title }}</option>
+										{% else %}
+											<option value="{{ entry.category_title }}">{{ entry.category_title }}</option>
+										{% endif %}
+									{% endfor %}
+								</select>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<p>{% trans "title" %}</p>
+							</td>
+							<td>
+								<input class="form-control mr-sm-2" type="search" value="{{catalog_search}}" name="catalog_search">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-6">
+				<h3 align="center">{% trans "Sort" %}</h3>
+				<hr>
+				<div class="row">
+					<div class="col-md-6">
+						{% if sort == 'category' %}
+							<p><input name="radio_sort" type="radio" value="category" checked="checked"> {% trans "category" %}</p>
+						{% else %}
+							<p><input name="radio_sort" type="radio" value="category"> {% trans "category" %}</p>
+						{% endif %}					
+						{% if sort == 'title' %}
+							<p><input name="radio_sort" type="radio" value="title" checked="checked"> {% trans "title" %}</p>
+						{% else %}
+							<p><input name="radio_sort" type="radio" value="title"> {% trans "title" %}</p>
+						{% endif %}
+						{% if sort == 'price' %}
+							<p><input name="radio_sort" type="radio" value="price" checked="checked"> {% trans "price" %}</p>
+						{% else %}
+							<p><input name="radio_sort" type="radio" value="price"> {% trans "price" %}</p>
+						{% endif %}
+					</div>
+					<div class="col-md-6">
+						{% if direction == 'ok' %}
+							<input type="checkbox" id="checkbox_sort_desc" name="checkbox_sort_desc" value="ok" checked>
+						{% else %}
+							<input type="checkbox" id="checkbox_sort_desc" name="checkbox_sort_desc" value="ok">
+						{% endif %}
+						<label for="checkbox_sort_desc" >{% trans "desc" %}</label><br>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row justify-content-center">
+			<button class="btn btn-outline-success" name="searchBtn" style="width:120px; margin:5px">{% trans "Go" %}</button>
+			<button class="btn btn-outline-primary" name="resetBtn" type="submit" onClick="window.location.reload();" style="width:120px; margin:5px">{% trans "Reset" %}</button>
+		</div>
+	</form>
+</div>
+
+{% if catalog.count > 0 %}
+<hr>
+<div class="row">
+{% for c in catalog %}
+	<div class="col-lg-4s col-md-4 col-6 thumb" style="margin-top: 5px;">
+	<!-- <div class="card"> -->
+		<div class="card-header">
+			<h5>{{ c.category }}</h5>
+			<h4 class="card-title">{{ c.catalog_title }}</h4>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-6">
+					{% if c.photo.url != None %}
+						<img style="width:100%;" src="{{ c.photo.url}}" alt="{{ c.title }}">
+					{% endif %}
+					<p><div class="Stars" style='--rating: {{ c.avg_rating| stringformat:".1f" }};'></div></p>												
+				</div>
+				<div class="col-md-6">
+					<p>{{ c.details | linebreaks}}</p>
+					<h4>{{ c.price | stringformat:"1.0f" }} 〒</h4>	
+					<a class="btn btn-info" href="{% url 'catalog_details' c.id %}">{% trans "Catalog details" %}</a>					
+				</div>				
+			</div>
+		</div>
+		<div class="card-footer">
+			<p><a href="{% url 'question_create' c.id %}">{% trans "Ask" %}</a></p>					
+			<p><a href="{% url 'review_create' c.id %}">{% trans "review_create" %}</a></p>			
+		</div>
+	<!-- </div> -->
+	</div>
+{% endfor %}
+</div>
+{% endif %}
+
+{% endblock content %}
+

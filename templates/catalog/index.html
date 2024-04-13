@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "catalogs" %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block content %}
+<div id="print_content">
+	<h2>{% trans "catalogs" %}</h2>
+	<p><a href="{% url 'catalog_create' %}">{% trans "Add" %}</a></p>					
+	<hr>
+	{% if catalog.count > 0 %}
+	<div class="row">
+		<table id="myTable" class="table-manager" style="width:100%; margin: 10px">
+			<thead>
+				<tr>
+					<th><p>{% trans "catalog_category" %}</p></th>
+					<th><p>{% trans "catalog_title" %}</p></th>
+					<th><p>{% trans "price" %}</p></th>
+					<th><p></p></th>					
+				</tr>
+			</thead>
+			<tbody>
+				{% for p in catalog %}
+				<tr>		
+					<td>
+						<p>{{ p.category }}</p>
+					</td>		
+					<td>
+						<p>{{ p.catalog_title }}</p>
+					</td>					
+					<td>
+						<p>{{ p.price | stringformat:"1.0f" }} 〒</p>
+					</td>
+					<td>
+						<p>
+							<a href="{% url 'catalog_edit' p.id %}">{% trans "Change" %}</a> |
+							<a href="{% url 'catalog_read' p.id %}">{% trans "View" %}</a> |
+							<a onclick="return confirm('Удалить запись?')" href="{% url 'catalog_delete' p.id %}">{% trans "Delete" %}</a>
+						</p>
+					</td>	
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endif %}
+</div>
+{% endblock content %}
+

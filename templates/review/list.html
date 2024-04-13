@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "reviews" %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block content %}
+<h2>{% trans "reviews" %}</h2>
+{% if review.count > 0 %}
+<div class="row">
+	<table id="myTable" class="table-manager" style="width:100%">
+		<thead>
+			<tr>
+				<th><p>{% trans "date_review" %}</p></th>
+				<th><p>{% trans "catalog" %}</p></th>
+				<th><p>{% trans "rating" %}</p></th>
+				<th><p>{% trans "review_details" %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for r in review %}
+			{% if r.rating != None %}
+			<tr>
+				<td><p>{{ r.date_review | date:"d.m.Y"}}<br>{{ r.client.email }}</p></td>
+				<td><p>{{ r.catalog }}</p></td>
+				<td><p>				
+					{% if r.rating != None %}
+						<div class="Stars" style='--rating: {{ r.rating | stringformat:".1f" }};'></div>
+					{% endif %}									
+				</p></td>
+				<td><p>{{ r.details | linebreaks }}</p></td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endif %}
+{% endblock content %}

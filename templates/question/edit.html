@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Change" %}{% endblock title %}
+{% block content %}
+<h2>{% trans "question" %}</h2>
+<form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="card" style="width:100%">
+		<div class="card-header">
+			<h5>{{ catalog.category }}</h5>
+			<h4 class="card-title">{{ catalog.catalog_title }}</h4>								
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-3">
+					{% if catalog.photo.url != None %}
+						<img style="width:100%;" src="{{ catalog.photo.url}}" alt="{{ catalog.title }}">
+					{% endif %}
+					<p><div class="Stars" style='--rating: {{ catalog.avg_rating| stringformat:".1f" }};'></div></p>												
+				</div>
+				<div class="col-md-4">
+					<p>{{ catalog.details | linebreaks}}</p>
+					<h4>{{ catalog.price | stringformat:"1.0f" }} 〒</h4>	
+				</div>				
+				<div class="col-md-5">
+					<p>{{ question.date_question | date:"d.m.Y H:i"}}</p>
+					<h3>{{ question.user.first_name }} {{ question.user.last_name }}<br>{{ question.user.email }}</h3>		
+					<p><strong>{% trans "question" %}:</strong> {{ question.question | linebreaks}}</p>
+					<table>
+						{{ form }}
+					</table>
+				</div>				
+			</div>
+		</div>
+		<div class="card-footer">
+		</div>
+	</div>
+	<div class="div-button-center">
+		<button type="submit" class="btn btn-outline-success" style="width:120px">{% trans "Save" %}</button>	
+		<a class="btn btn-outline-info" style="width:120px" href="{% url 'question_index' %}">{% trans "Back" %}</a> 	
+	</div>		
+</form>
+{% endblock content %}

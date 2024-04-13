@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "questions" %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block content %}
+<h2>{% trans "questions" %}</h2>
+{% if question.count > 0 %}
+<div class="row">
+	<table id="myTable" class="table-manager" style="width:100%">
+		<thead>
+			<tr>
+				<th><p>{% trans "date_question" %}<br>{% trans "name" %}</p></th>
+				<th><p>{% trans "catalog" %}</p></th>
+				<th><p>{% trans "question" %}</p></th>
+				<th><p>{% trans "answer" %}</th>
+				<th><p></p></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for r in question %}
+			<tr>
+				<td><p>{{ r.date_question | date:"d.m.Y H:i"}}<br>{{ r.user.first_name }}<br>{{ r.user.last_name }}<br>{{ r.user.email }}</p></td>
+				<td><p>{{ r.catalog }}</p></td>
+				<td><p>{{ r.question | linebreaks }}</p></td>
+				<td>
+					<p>
+					{% if r.answer != None %}
+						{{ r.answer | linebreaks }}
+					{% endif %}	
+					</p>
+				</td>
+				<td>
+					<form method="post">
+						{% csrf_token %}
+						<a href="{% url 'question_edit' r.id %}">{% trans "Change" %}</a> |
+						<a href="{% url 'question_read' r.id %}">{% trans "View" %}</a> |
+						<a onclick="return confirm('Удалить запись?')" href="{% url 'question_delete' r.id %}">{% trans "Delete" %}</a>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endif %}
+{% endblock content %}

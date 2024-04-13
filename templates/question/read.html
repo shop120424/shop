@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "View" %}{% endblock title %}
+{% block content %}
+<h2>{% trans "question" %}</h2>
+<div class="row justify-content-center">
+	<div class="card" style="width:100%">
+		<div class="card-header">
+			<p>{{ question.catalog }}</p>
+			<hr>
+			<p>{{ question.date_question | date:"d.m.Y H:i"}}</p>
+			<h3>{{ question.user.first_name }} {{ question.user.last_name }}<br>{{ question.user.email }}</h3>		
+		</div>
+		<div class="card-body">
+			<h4>{{ question.question | linebreaks}}</h4>			
+			<p>
+				{% if question.answer != None %}
+					{{ question.answer | linebreaks }}
+				{% endif %}	
+			</p>			
+		</div>
+		<div class="card-footer">				
+		</div>		
+	</div>
+	<br>
+	<div class="div-button-center">
+		<a class="btn btn-outline-info" style="width:120px" href="{% url 'question_index' %}">{% trans "Back" %}</a> 	
+	</div>	
+</div>
+{% endblock content %}
