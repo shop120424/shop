@@ -146,7 +146,7 @@ msgstr "Контакты"
 
 #: .\templates\base.html:69 .\templates\category\index.html:6
 msgid "categorys"
-msgstr "Категории товра"
+msgstr "Категории товара"
 
 #: .\templates\base.html:70 .\templates\catalog\index.html:4
 #: .\templates\catalog\index.html:8
